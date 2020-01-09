@@ -1,0 +1,48 @@
+body{
+    background-image: url('../img/login.jpg');
+    background-size: auto;
+    background-position: center;
+}
+.small-no{
+    height: 40px;
+}
+
+.loginback{
+    
+    height: 100vh;
+    width: 100%;
+    background-size: auto;
+    background-repeat: no-repeat;
+    justify-content: flex-end;
+
+}
+
+.container{
+    height: 100% ;
+    width: 100%;
+    margin: auto;
+}
+
+.centro{
+    width: 40%;
+    height: 30% auto;
+    margin: auto;
+    top: 10%;
+    border-radius: 20px;
+    border: 3px green;
+}
+
+.alinhamento{
+    text-align: center;
+}
+
+.img{
+    margin-top: 7%;
+    width: 25%;
+    height: 25% auto;
+    align-self: center;
+}
+
+.resize{
+    object-fit: scale-down;
+}
