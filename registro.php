@@ -31,7 +31,7 @@ $title="Registro";
                 <div class="card-body">
                     <h5 class="card-title alinhamento">Registro</h5>
                     <p class="card-text">
-                        <form action="cadastroup.php" method="POST">
+                        <form action="cadastrar.php" method="POST">
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Nome de usuário</label>
                                 <input type="text" name="nome" class="form-control" id="nome" aria-describedby="emailHelp" placeholder="nome de usuário">
