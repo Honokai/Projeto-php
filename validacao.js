@@ -7,7 +7,7 @@ $(document).ready(function(){
             url: 'usuario.php',
             data: {data: valor},
             success: function (data){
-                if(data >= 1)
+                if(data == 0)
                     document.getElementById('alerta').style.display = "block";
             }
 

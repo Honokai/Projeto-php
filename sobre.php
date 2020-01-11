@@ -1,6 +1,6 @@
 <?php 
 $title="Sobre";
-
+require_once("produto.php");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -20,7 +20,24 @@ $title="Sobre";
 </head>
 <body>
     <?php include_once("./template/navbar.html");?>
-    
+    <select name="" id="">
+        <?php 
+            while($row = $result->fetch_assoc()){
+                echo "<option value=".$row['id'].">". $row['Nome']."</option>";
+            }
+        ?>
+    </select>
+    <div style="width: 100%; margin: 0 auto">
+        <?php
+            $result = mysqli_query($conexao,"select * from produtos");
+            while($row = $result->fetch_assoc()){
+                $nome = $row['Nome'];
+                $local = $row['image'];
+                include("./template/arquivo.html");
+            }
+
+        ?>
+    </div>
 </body>
 </html>
 

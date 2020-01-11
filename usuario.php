@@ -3,7 +3,7 @@
 require_once("config/connection.php");
 
 $dado = $_GET['data'];
-$query = mysqli_query($conexao,"select * from usuario where nome like '".$dado."%'");
+$query = mysqli_query($conexao,"select * from usuario where `e-mail` like '".$dado."%'");
 $row = mysqli_num_rows($query);
 
 if($row != 0)

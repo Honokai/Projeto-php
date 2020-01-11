@@ -3,7 +3,7 @@ $title="Login";
 require_once('config/connection.php');
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 
     <meta charset="UTF-8">
@@ -20,6 +20,7 @@ require_once('config/connection.php');
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
     <link rel="stylesheet" type="text/css" href="style/main.css"/>
     <script type="text/javascript" src="validacao.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 
 </head>
 <body>
@@ -31,21 +32,20 @@ require_once('config/connection.php');
                 <div class="card-body">
                     <h5 class="card-title alinhamento">Login</h5>
                     <p class="card-text">
-                        <form>
+                        <form method="GET" action="validar.php">
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Endereço de e-mail</label>
-                                <input type="text" class="form-control" id="e-mail" aria-describedby="emailHelp" placeholder="e-mail">
+                                <input type="text" class="form-control" name="email" id="e-mail" aria-describedby="emailHelp" placeholder="e-mail">
                                 <div class="alert alert-warning alert-dismissible fade show" id="alerta" style="text-align:center; display: none" role="alert">
-                                    Usuário já cadastrado!
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
+                                    Usuário não cadastrado!
+                                    <button type="button" id="fechar" class="close" aria-label="Close">&times;
                                     </button>
                                 </div>
                                 <small id="emailHelp" class="form-text text-muted">Seu e-mail nunca será exposto conosco.</small>
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputPassword1">Senha</label>
-                                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="senha">
+                                <input type="password" name="senha"class="form-control" id="exampleInputPassword1" placeholder="senha">
                             </div>
                             <div class="form-group form-check alinhamento">
                                 <input type="checkbox" class="form-check-input" id="exampleCheck1">
@@ -57,6 +57,7 @@ require_once('config/connection.php');
                                 <button type="submit" class="btn btn-primary alinhamento">Submit</button>
                             </div>
                         </form>
+                    
                     </p>
                 </div>
             </div>
