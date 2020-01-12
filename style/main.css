@@ -1,13 +1,16 @@
-body{
+#login{
     background-image: url('../img/login.jpg');
     background-size: auto;
     background-position: center;
     
 }
-.small-no{
-    height: 40px;
-}
 
+#registro{
+    background-image: url('../img/registro.png');
+    background-size: auto;
+    background-position: center;
+    
+}
 .loginback{
     
     height: 100vh;
@@ -29,6 +32,7 @@ body{
     height: 30% auto;
     margin: auto;
     top: 5%;
+    margin-bottom: 5%;
     border-radius: 20px;
     border: 3px green;
 }

@@ -23,8 +23,10 @@ require_once('config/connection.php');
     <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 
 </head>
-<body>
+<body id="login">
+    
     <?php include_once("./template/navbar.html");?>
+    
     <div class="loginback">
         <div class="container container-fluid">
             <div class="card centro resize">
