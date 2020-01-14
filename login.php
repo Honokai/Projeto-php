@@ -34,7 +34,7 @@ require_once('config/connection.php');
                 <div class="card-body">
                     <h5 class="card-title alinhamento">Login</h5>
                     <p class="card-text">
-                        <form method="GET" action="validar.php">
+                        <form method="POST" action="validar.php">
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Endereço de e-mail</label>
                                 <input type="text" class="form-control" name="email" id="e-mail" aria-describedby="emailHelp" placeholder="e-mail">

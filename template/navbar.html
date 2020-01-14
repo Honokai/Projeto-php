@@ -26,10 +26,11 @@
         <li class="nav-item">
           <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
         </li>
+        <div style="width: 50vw">
+          <li class="nav-item" style="text-align:center">
+            <a class="nav-link active" href="#" tabindex="-1"><?php session_start(); echo "Bem-vindo, ".$_SESSION['nome']; ?></a>
+          </li>
+        </div>
       </ul>
-      <form class="form-inline my-2 my-lg-0">
-        <input class="form-control mr-sm-2" style="height: 30px;" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success my-2 my-sm-0" style="height: 30px;" type="submit">Search</button>
-      </form>
     </div>
   </nav>
