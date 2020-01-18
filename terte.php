@@ -3,7 +3,7 @@
 $title="Home";
 ?>
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="pt-br   ">
 <head>
     <?php 
         session_start();
@@ -37,9 +37,11 @@ $title="Home";
     <link rel="stylesheet" type="text/css" href="style/jquery.dataTables.min.css"/>
     <link href='packages/core/main.css' rel='stylesheet' />
     <link href='packages/daygrid/main.css' rel='stylesheet' />
+    <link href='packages/timegrid/main.css' rel='stylesheet' />
 
     <script src='packages/core/main.js'></script>
     <script src='packages/daygrid/main.js'></script>
+    <script src='packages/timegrid/main.js'></script>
 
     <script>
 
@@ -47,9 +49,15 @@ $title="Home";
         var calendarEl = document.getElementById('calendar');
 
         var calendar = new FullCalendar.Calendar(calendarEl, {
-          plugins: [ 'dayGrid']
+          plugins: [ 'dayGrid', 'timeGrid'],
+          header: {
+            left: 'prev,next today',
+            center: 'title',
+            right: 'dayGridMonth,timeGridWeek,timeGridDay'
+        }
         });
-
+        calendar.setOption('locale', 'pt-br');
+        calendar.changeView('timeGridDay');
         calendar.render();
       });
 
