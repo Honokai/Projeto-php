@@ -2,7 +2,7 @@
 $title="Home";
 ?>
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="pt-br">
 <head>
     <?php 
         session_start();
@@ -24,47 +24,95 @@ $title="Home";
     <script type="text/javascript" src="js/jquery.js"></script>
     <script type="text/javascript" src="js/jquery-3.4.1.js"></script>
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="js/validacao.js"></script>
-    <script type="text/javascript" src="js/novoevento.js"></script>
     <link rel="stylesheet" type="text/css" href="style/main.css"/>
     <link rel="stylesheet" type="text/css" href="style/bootstrap.min.css"/>
     
     
     
     <script type="text/javascript" src="mask/jquery.mask.js"></script>  
-
+    <script type="text/javascript" src="js/teste.js"></script> 
     <script type="text/javascript" charset="utf8" src="js/jquery.dataTables.min.js"></script>
   <!--  TESTE -->
     <link rel="stylesheet" type="text/css" href="style/jquery.dataTables.min.css"/>
-    
+    <link href='packages/core/main.css' rel='stylesheet' />
+    <link href='packages/daygrid/main.css' rel='stylesheet' />
+    <link href='packages/timegrid/main.css' rel='stylesheet' />
+
+    <script src='packages/core/main.js'></script>
+    <script src='packages/daygrid/main.js'></script>
+    <script src='packages/timegrid/main.js'></script>
+    <script src='packages/interaction/main.js'></script>
+    <script src='packages/core/locales/pt-br.js'></script>
+
+    <script>
+
+      document.addEventListener('DOMContentLoaded', function() {
+        var calendarEl = document.getElementById('calendar');
+
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+          locale:'pt-br',
+          plugins: [ 'interaction','dayGrid', 'timeGrid'],
+          selectable: true,
+          header: {
+            left: 'prev,next today',
+            center: 'title',
+            right: 'dayGridMonth,timeGridWeek,timeGridDay'
+        },
+        editable: true,
+        eventSources: [
+          {
+            url: "api/get/calendar.php",
+            extraParams: {
+              login: <?php echo $_SESSION['login'] ?>,
+            }
+          }
+        ],
+        eventDrop: function(info){
+          $.ajax({
+            url: "api/update/evento.php",
+            method: 'POST',
+            data: {
+              login: <?php echo $_SESSION['login'] ?>,
+              data: info.event.start.toISOString(),
+              nome: info.event.title
+            },
+            complete: function(data){
+              console.log(data);
+            }
+          });
+        },
+        eventClick: function(){
+          $("#modal").modal('toggle');
+        }
+        });
+        calendar.render();
+      });
+
+    </script>
 
 </head>
 <body>
-
+    
     <?php include_once("./template/navbar.html");?>
-
-    <?php echo "<input id='usuario_id' type='text' hidden value='".$_SESSION['login']."'>"?>
-    <div id="bot"style="width: 100%; height: 40px">
-        <div style="margin-top: 0.5%; float:right; margin-bottom:0.5%">
-            <button type="button" id="ativa" class="btn btn-primary">
-                Refresh
+    <div id='calendar'></div>
+    <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
             </button>
-            <button type="button" id="adicionar" class="btn btn-primary">
-                Adicionar
-            </button>
+          </div>
+          <div class="modal-body">
+            ...
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+          </div>
         </div>
+      </div>
     </div>
-    <div id="adiciona" style="width: 100vw; margin-top: 1%;margin-bottom: 1%">
-
-    </div>
-
-    <div id="automatico">
-        <?php
-        include('template/tablehead.html');
-        include('template/tablefoo.html');
-        ?>
-    </div>
-
 </body>
 </html>
-
