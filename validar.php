@@ -4,7 +4,6 @@ require_once("config/teste.php");
 session_start();
 $conexao = new Conexao();
 $db = $conexao->estabelecon();
-
 $email = $_POST['email'];
 $senha = $_POST['senha'];
 $senha = md5($_POST['senha']);
@@ -17,8 +16,6 @@ if($row['e-mail'] == $email && $row['senha'] == $senha){
     $_SESSION['senha'] = $senha;
     header('location: index.php');
 }else{
-    echo $_POST['senha']."////";
-    echo $senha."/////";
     unset($_SESSION['login']);
     unset($_SESSION['senha']);
 }

@@ -1,9 +1,8 @@
-
 <?php 
 $title="Home";
 ?>
 <!DOCTYPE html>
-<html lang="pt-br   ">
+<html lang="pt-br">
 <head>
     <?php 
         session_start();
@@ -31,7 +30,7 @@ $title="Home";
     
     
     <script type="text/javascript" src="mask/jquery.mask.js"></script>  
-
+    <script type="text/javascript" src="js/teste.js"></script> 
     <script type="text/javascript" charset="utf8" src="js/jquery.dataTables.min.js"></script>
   <!--  TESTE -->
     <link rel="stylesheet" type="text/css" href="style/jquery.dataTables.min.css"/>
@@ -42,6 +41,8 @@ $title="Home";
     <script src='packages/core/main.js'></script>
     <script src='packages/daygrid/main.js'></script>
     <script src='packages/timegrid/main.js'></script>
+    <script src='packages/interaction/main.js'></script>
+    <script src='packages/core/locales/pt-br.js'></script>
 
     <script>
 
@@ -49,15 +50,41 @@ $title="Home";
         var calendarEl = document.getElementById('calendar');
 
         var calendar = new FullCalendar.Calendar(calendarEl, {
-          plugins: [ 'dayGrid', 'timeGrid'],
+          locale:'pt-br',
+          plugins: [ 'interaction','dayGrid', 'timeGrid'],
+          selectable: true,
           header: {
             left: 'prev,next today',
             center: 'title',
             right: 'dayGridMonth,timeGridWeek,timeGridDay'
+        },
+        editable: true,
+        eventSources: [
+          {
+            url: "api/get/calendar.php",
+            extraParams: {
+              login: <?php echo $_SESSION['login'] ?>,
+            }
+          }
+        ],
+        eventDrop: function(info){
+          $.ajax({
+            url: "api/update/evento.php",
+            method: 'POST',
+            data: {
+              login: <?php echo $_SESSION['login'] ?>,
+              data: info.event.start.toISOString(),
+              nome: info.event.title
+            },
+            complete: function(data){
+              console.log(data);
+            }
+          });
+        },
+        dateClick: function(info) {
+          
         }
         });
-        calendar.setOption('locale', 'pt-br');
-        calendar.changeView('timeGridDay');
         calendar.render();
       });
 
