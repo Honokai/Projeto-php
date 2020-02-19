@@ -50,6 +50,7 @@ $title="Home";
         var calendarEl = document.getElementById('calendar');
 
         var calendar = new FullCalendar.Calendar(calendarEl, {
+          timezone: 'America/Noronha',
           locale:'pt-br',
           plugins: [ 'interaction','dayGrid', 'timeGrid'],
           selectable: true,
@@ -68,18 +69,17 @@ $title="Home";
           }
         ],
         eventDrop: function(info){
+          timezone: 'America/Noronha';
           $.ajax({
             url: "api/update/evento.php",
             method: 'POST',
             data: {
               login: <?php echo $_SESSION['login'] ?>,
-              data: info.event.start.toISOString(),
+              data: info.event.start.toString(),
               nome: info.event.title
-            },
-            complete: function(data){
-              console.log(data);
             }
           });
+          console.log(info.event.start.toString());
         },
         eventClick: function(){
           $("#modal").modal('toggle');

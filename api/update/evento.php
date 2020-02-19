@@ -2,7 +2,8 @@
   require_once("../../config/BancoDados.php");
   $banco = new BancoDados;
   $conexao = $banco->conexao();
-  $data = str_replace("T"," ",$_POST['data']); $data = substr($data,0,19);
+  $data = substr($_POST['data'],0,24); 
+  $data = date('Y-m-d H:i:s',strtotime($data)); 
   $query = "update agenda set data_ag='".$data."' where usuario_id=".$_POST['login']." and nome='".$_POST['nome']."'";
   $result = $conexao->prepare($query);
   $result->execute();
