@@ -12,6 +12,6 @@
   while($linha = $result->fetch(PDO::FETCH_ASSOC)){
       array_push($evento, $linha);
   }
-  header('Content-Type: application/json;charset=utf-8');
-  echo json_encode($evento);
+  header('Content-Type: application/json');
+  echo json_encode($evento, true), "\n";
 ?>

@@ -22,6 +22,7 @@ $title="Home";
     
     <script type="text/javascript" src="js/jquery.min.js"></script>
     <script type="text/javascript" src="js/jquery.js"></script>
+    <script type="text/javascript" src="js/popper.min.js"></script>
     <script type="text/javascript" src="js/jquery-3.4.1.js"></script>
     <script type="text/javascript" src="js/tooltip.min.js"></script>
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
@@ -71,8 +72,10 @@ $title="Home";
             textColor: 'black' // an option!
           }
         ],
-        eventRender: function(info, event, element, view){
-          console.log(info)
+        eventRender: function(info) {
+          var user = document.createElement('div');
+          user.innerHTML = info.event.extendedProps.description;
+          info.el.lastChild.lastChild.appendChild(user);
         },
         eventDrop: function(info){
           timezone: 'America/Noronha';
@@ -85,6 +88,9 @@ $title="Home";
               nome: info.event.title
             }
           });
+        },
+        dateClick: function(event){
+          $('#calendar').fullCalendar('changeView', 'agendaDay');
         },
         eventClick: function(info){
           $.ajax({
