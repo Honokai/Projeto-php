@@ -1,6 +1,5 @@
 <?php 
 require_once("config/teste.php");
-session_start();
 $con = new Conexao();
 
 $conexao = $con->estabelecon();

@@ -2,11 +2,13 @@
   require_once("../../config/BancoDados.php");
   $banco = new BancoDados;
   $conexao = $banco->conexao();
-  $data = substr($_POST['data'],0,24); 
-  $data = date('Y-m-d H:i:s',strtotime($data)); 
+  $char = $conexao->prepare("set names utf8");
+  $char->execute();
+  $data = substr($_POST['data'],0,24);
+  $data = strtotime($data);
+  $data = date("Y-m-d H:m:s",$data);
   $query = "update agenda set data_ag='".$data."' where usuario_id=".$_POST['login']." and nome='".$_POST['nome']."'";
   $result = $conexao->prepare($query);
-  $result->execute();
   if($result->execute()){
     http_response_code(200);
     header('Content-Type: application/json;charset=utf-8');

@@ -23,6 +23,7 @@ $title="Home";
     <script type="text/javascript" src="js/jquery.min.js"></script>
     <script type="text/javascript" src="js/jquery.js"></script>
     <script type="text/javascript" src="js/jquery-3.4.1.js"></script>
+    <script type="text/javascript" src="js/tooltip.min.js"></script>
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
     <link rel="stylesheet" type="text/css" href="style/main.css"/>
     <link rel="stylesheet" type="text/css" href="style/bootstrap.min.css"/>
@@ -50,24 +51,29 @@ $title="Home";
         var calendarEl = document.getElementById('calendar');
 
         var calendar = new FullCalendar.Calendar(calendarEl, {
-          timezone: 'America/Noronha',
+          timezone: 'America/Fortaleza',
           locale:'pt-br',
           plugins: [ 'interaction','dayGrid', 'timeGrid'],
           selectable: true,
+          editable: true,
           header: {
             left: 'prev,next today',
             center: 'title',
             right: 'dayGridMonth,timeGridWeek,timeGridDay'
         },
-        editable: true,
         eventSources: [
           {
             url: "api/get/calendar.php",
             extraParams: {
               login: <?php echo $_SESSION['login'] ?>,
-            }
+            },
+            color: 'yellow',   // an option!
+            textColor: 'black' // an option!
           }
         ],
+        eventRender: function(info, event, element, view){
+          console.log(info)
+        },
         eventDrop: function(info){
           timezone: 'America/Noronha';
           $.ajax({
@@ -79,9 +85,21 @@ $title="Home";
               nome: info.event.title
             }
           });
-          console.log(info.event.start.toString());
         },
-        eventClick: function(){
+        eventClick: function(info){
+          $.ajax({
+            url:"api/get/dadoevento.php",
+            type: 'GET',
+            contentType: "charset=ISO-8859-1",
+            data: {
+              login: <?php echo $_SESSION['login'] ?>,
+              data: info.event.start.toISOString(),
+              nome: info.event.title
+            },
+            complete: function(data){
+              console.log(data);
+            }
+          });
           $("#modal").modal('toggle');
         }
         });
@@ -95,24 +113,41 @@ $title="Home";
     
     <?php include_once("./template/navbar.html");?>
     <div id='calendar'></div>
-    <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            ...
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
-          </div>
+    <div class="modal" id="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Evento</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="input-group mb-3" style="float:left">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="">Nome Evento</span>
+                        </div>
+                        <input type="text"id='nomevento' class="form-control" aria-label="Username" aria-describedby="basic-addon1">
+                    </div>
+                    <div class="input-group mb-3" style="float:left">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="">Data</span>
+                        </div>
+                        <input type="date" id='dataevento' class="form-control" aria-label="Username" aria-describedby="basic-addon1">
+                    </div>
+                    <div class="input-group mb-3" style="float:left">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="">Início</span>
+                        </div>
+                        <input type="time" id='dataevento' class="form-control" aria-label="Username" aria-describedby="basic-addon1">
+                    </div>
+                    <div class="input-group mb-3" style="float:left">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="">Descrição</span>
+                        </div>
+                        <input type="text" id='descricaoevento' class="form-control" aria-label="Username" aria-describedby="basic-addon1">
+                    </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary">Salvar</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar e cancelar</button>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-</body>
-</html>
