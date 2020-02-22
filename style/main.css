@@ -21,6 +21,14 @@
 
 }
 
+.fc-event{
+    height: max-content !important;
+}
+.fc-title{
+    font-weight: bolder !important;
+}
+
+
 .container{
     height: 100% ;
     width: 100%;

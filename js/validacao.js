@@ -1,5 +1,7 @@
+
 $(document).ready(function(){
 
+    
     $('#e-mail').blur(function(){
         var valor = document.getElementById('e-mail').value;
         $.ajax({
@@ -13,5 +15,5 @@ $(document).ready(function(){
 
         });   
     });
-
+    
 });

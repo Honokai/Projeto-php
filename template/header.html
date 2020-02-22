@@ -1,0 +1,144 @@
+<head>
+    <?php 
+        session_start();
+        require_once("agenda.php");
+        if((!isset($_SESSION['login']) == true) and (!isset($_SESSION['senha'])== true)){
+            header("location: login.php");
+        }else{
+        }
+    ?>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title> <?php echo $title ?></title>
+    
+    <!-- bootstrap links -->    
+    
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/validacao.js"></script>
+    <script type="text/javascript" src="js/jquery.js"></script>
+    <script type="text/javascript" src="js/popper.min.js"></script>
+    <script type="text/javascript" src="js/jquery-3.4.1.js"></script>
+    <script type="text/javascript" src="js/tooltip.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="style/main.css"/>
+    <link rel="stylesheet" type="text/css" href="style/bootstrap.min.css"/>
+    <script type="text/javascript" src='js/moment.min.js'></script>
+    <script type="text/javascript" src='js/fullcalendar.min.js'></script>
+    
+    
+    <script type="text/javascript" src="mask/jquery.mask.js"></script>  
+    <script type="text/javascript" src="js/teste.js"></script> 
+    <script type="text/javascript" charset="utf8" src="js/jquery.dataTables.min.js"></script>
+  <!--  TESTE -->
+    <link rel="stylesheet" type="text/css" href="style/jquery.dataTables.min.css"/>
+    <link href='packages/core/main.css' rel='stylesheet' />
+    <link href='packages/daygrid/main.css' rel='stylesheet' />
+    <link href='packages/timegrid/main.css' rel='stylesheet' />
+    <link href='packages/bootstrap/main.css' rel='stylesheet' />
+
+    
+    <script src='packages/core/main.js'></script>
+    <script src='packages/daygrid/main.js'></script>
+    <script src='packages/timegrid/main.js'></script>
+    <script src='packages/interaction/main.js'></script>
+    <script src='packages/core/locales/pt-br.js'></script>
+    <script src='packages/bootstrap/main.js'></script>
+    <link href='https://use.fontawesome.com/releases/v5.0.6/css/all.css' rel='stylesheet'>
+    <link href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css' rel='stylesheet' />
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var calendarEl = document.getElementById('calendar');
+
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+          themeSystem: "bootstrap",
+          timezone: 'America/Fortaleza',
+          contentHeight: 'auto',
+          locale:'pt-br',
+          height: 600,
+          plugins: [ 'interaction','dayGrid', 'timeGrid', 'bootstrap'],
+          selectable: true,
+          editable: true,
+          eventLimit: true, // for all non-TimeGrid views
+          header: {
+            left: 'prev,next today',
+            center: 'title',
+            right: 'timeGridWeek,timeGridDay,dayGridMonth'
+          },
+          eventSources: [
+            {
+              url: "api/get/calendar.php",
+              extraParams: {
+                login: <?php echo $_SESSION['login'] ?>,
+              },  
+              textColor: 'white' // an option!
+            }
+          ],
+          eventRender: function(info) {
+            if(info.view.type == 'dayGridMonth'){
+              var user = document.createElement('div');
+              user.innerHTML = info.event.extendedProps.description;
+              info.el.lastChild.lastChild.appendChild(user);
+            }else{
+              var user = document.createElement('div');
+              user.style.display = 'inline-block';
+              user.innerHTML = info.event.extendedProps.description;
+              info.el.appendChild(user);
+            }
+          },
+          eventDrop: function(info){
+            timezone: 'America/Noronha';
+            $.ajax({
+              url: "api/update/evento.php",
+              method: 'POST',
+              data: {
+                login: <?php echo $_SESSION['login'] ?>,
+                data: info.event.start.toString(),
+                dataend: info.event.end.toString(),
+                nome: info.event.title
+              }
+            });
+          },
+          eventResize: function(info){
+            timezone: 'America/Noronha';
+            $.ajax({
+              url: "api/update/evento.php",
+              method: 'POST',
+              data: {
+                login: <?php echo $_SESSION['login'] ?>,
+                data: info.event.start.toString(),
+                dataend: info.event.end.toString(),
+                nome: info.event.title
+              }
+            });
+          },  
+          eventClick: function(info){
+            $.ajax({
+              url:"api/get/dadoevento.php",
+              type: 'GET',
+              contentType: "charset=ISO-8859-1",
+              data: {
+                login: <?php echo $_SESSION['login'] ?>,
+                data: info.event.start.toISOString(),
+                dataend: info.event.end.toISOString(),
+                nome: info.event.title
+              },
+              complete: function(data, response, status){
+                let resposta = JSON.parse(data.responseText);
+                console.log(resposta.data_ag.substring(11,16));
+                document.getElementById('nomevento').value = resposta.Nome;
+                document.getElementById('datainicio').value = resposta.data_ag.substring(0,10);
+                document.getElementById('horarioinicio').value = resposta.data_ag.substring(11,16);
+                document.getElementById('descricaoevento').value = resposta.Descricao;
+              }
+            });
+            $("#modal").modal('toggle');
+          }
+        });
+        calendar.render();
+      });
+    </script>
+
+</head>
