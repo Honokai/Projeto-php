@@ -1,6 +1,7 @@
 <?php 
   require_once("../../config/BancoDados.php");
   $banco = new BancoDados;
+  date_default_timezone_set('America/Fortaleza');
   $conexao = $banco->conexao();
   $char = $conexao->prepare("set names utf8");
   $char->execute();
