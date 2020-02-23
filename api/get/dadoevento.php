@@ -6,9 +6,9 @@ $bd = new BD();
 $conexao = $bd->conexao();
 $data = substr($_GET['data'],0,24);
 $data = strtotime($data);
-$data = date("Y-m-d H:i:s", $data); $hora = substr($data,11,19); $data1 = substr($data,0,10);
+$data = date("Y-m-d H:i:s", $data);
 $nome=$_GET['nome']; $login = $_GET['login'];
-$query = "select * from agenda where `usuario_id`=".$login." and nome='".$nome."' and `data_ag`='". $data . " " . $hora . "'";
+$query = "select a.nome,a.data_ag,a.data_fim,a.Descricao,f.descricao feedback from agenda a left join feedback f on a.id=f.agenda_id where `usuario_id`=".$login." and nome='".$nome."' and `data_ag`='". $data."'";
 $result = mysqli_query($conexao,$query); 
 if($result = mysqli_query($conexao,$query)){
     echo json_encode(mysqli_fetch_assoc($result), true);

@@ -122,25 +122,27 @@
               url:"api/get/dadoevento.php",
               type: 'GET',
               data: {
+                id: info.event.id,
                 login: <?php echo $_SESSION['login'] ?>,
                 data: info.event.start.toString(),
                 nome: info.event.title
               },
               complete: function(data, response, status){
+                console.log(data);
                 let resposta = JSON.parse(data.responseText);
-                document.getElementById('nomevento').value = resposta.Nome;
+                document.getElementById('nomevento').value = resposta.nome;
                 document.getElementById('datainicio').value = resposta.data_ag.substring(0,10);
                 document.getElementById('horarioinicio').value = resposta.data_ag.substring(11);
                 document.getElementById('datatermino').value = resposta.data_fim.substring(0,10);
                 document.getElementById('horariotermino').value = resposta.data_fim.substring(11);
                 document.getElementById('descricaoevento').value = resposta.Descricao;
-                document.getElementById('namevento').value = resposta.Nome;
+                document.getElementById('namevento').value = resposta.nome;
                 document.getElementById('dataevento').value = resposta.data_ag.substring(0,10);
                 document.getElementById('horaevento').value = resposta.data_ag.substring(11);
                 document.getElementById('datet').value = resposta.data_fim.substring(0,10);
                 document.getElementById('horat').value = resposta.data_fim.substring(11);
                 document.getElementById('descricao').value = resposta.Descricao;
-                console.log($('#nomevento').val());
+                document.getElementById('feedbackdescricao').value = resposta.feedback;
               }
             });
             $("#modal").modal('toggle');
