@@ -49,12 +49,11 @@ require_once('config/connection.php');
                                 <label for="exampleInputPassword1">Senha</label>
                                 <input type="password" name="senha"class="form-control" id="exampleInputPassword1" placeholder="senha">
                             </div>
-                            <div class="form-group form-check alinhamento">
-                                <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                                <label class="form-check-label" for="exampleCheck1">Check me out</label><br>
-                                <a class="btn btn-link" href="registro.php">Não tem conta? Registre-se aqui.</a>
-
-                            </div>
+                            <?php 
+                            if($_GET['erro'] == 1){
+                                echo"<div class='alert alert-danger' role='alert'>E-mail ou senha informado está incorreto.</div>" ;
+                            }
+                            ?>
                             <div class="alinhamento">
                                 <button type="submit" class="btn btn-primary alinhamento">Submit</button>
                             </div>

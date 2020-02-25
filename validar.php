@@ -16,11 +16,9 @@ if($row['e-mail'] == $email && $row['senha'] == $senha){
     $_SESSION['senha'] = $senha;
     header('location: index.php');
 }else{
-    unset($_SESSION['login']);
-    unset($_SESSION['senha']);
-    echo ("Erro: ".mysqli_error($db));
-    echo ("Senha: ". $_SESSION['senha']);
-    echo ("Senha no banco: ". $row['senha']);
+    session_destroy();
+    $erro = 1;
+    header('location: login.php?erro='.$erro);
 }
 
 ?>
