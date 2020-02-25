@@ -50,6 +50,7 @@ $(document).ready(function(){
                 console.log(login);
                 console.log(response);
                 console.log(data);
+                $("#modal").modal('toggle');
             }
         });
       });
