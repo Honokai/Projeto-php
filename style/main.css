@@ -28,7 +28,9 @@
 .fc-title{
     font-weight: bolder !important;
 }
-
+.swal-height{
+    width: 100px !important;
+}
 .container{
     height: 100% ;
     width: 100%;

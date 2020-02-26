@@ -9,17 +9,21 @@ $title="Home";
     <?php include_once("./template/navbar.html");?>
     <p></p>
     <div id='calendar'></div>
-    <input type="text" id='login' style="visibility: hidden; width:1px; height:0" value="<?php echo $_SESSION['login']?>">
-    <input type="text" id='namevento' style="visibility: hidden; width:1px; height:0" value="">
-    <input type="text" id='dataevento' style="visibility: hidden; width:1px; height:0" value="">
-    <input type="text" id='horaevento' style="visibility: hidden; width:1px; height:0" value="">
-    <input type="text" id='datet' style="visibility: hidden; width:1px; height:0" value="">
-    <input type="text" id='horat' style="visibility: hidden; width:1px; height:0" value="">
-    <input type="text" id='descricao' style="visibility: hidden; width:1px; height:0" value="">
+    <input type="text" id='login' style="display: none; width:1px; height:0" value="<?php echo $_SESSION['login']?>">
+    <input type="text" id='idevento' style="display: none; width:1px; height:0" value="">
+    <input type="text" id='namevento' style="display: none; width:1px; height:0" value="">
+    <input type="text" id='dataevento' style="display: none; width:1px; height:0" value="">
+    <input type="text" id='horaevento' style="display: none; width:1px; height:0" value="">
+    <input type="text" id='datet' style="display: none; width:1px; height:0" value="">
+    <input type="text" id='horat' style="display: none; width:1px; height:0" value="">
+    <input type="text" id='descricao' style="display: none; width:1px; height:0" value="">
     <div class="modal" id="modal" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
             <div class="card-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
                 <ul class="nav nav-tabs card-header-tabs" id="listadados" role="tablist">
                     <li class="nav-item">
                         <a class="nav-link active" href="#tabevento" role="tab" aria-controls="evento" aria-selected="true">Evento</a>
@@ -74,7 +78,7 @@ $title="Home";
                             </div>
                         <div class="modal-footer">
                             <button type="button" id="enviar" class="btn btn-primary">Salvar</button>
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar e cancelar</button>
+                            <button type="button" id="excluirevento" class="btn btn-primary btn-danger" data-dismiss="modal">Excluir evento</button>
                         </div>
                     </div>
                     <div class="tab-pane" id="feedback" role="tabpanel">

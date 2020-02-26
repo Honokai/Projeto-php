@@ -20,7 +20,7 @@ require_once('config/connection.php');
     
     
     <link rel="stylesheet" type="text/css" href="style/main.css"/>
-    <script type="text/javascript" src="validacao.js"></script>
+    <script type="text/javascript" src="js/validacao.js"></script>
     <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 
 </head>

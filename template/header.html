@@ -13,10 +13,12 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title> <?php echo $title ?></title>
     
+    <script type="text/javascript" src="js/sweetalert.js"></script>
+
+
     <!-- bootstrap links -->    
     
     <script type="text/javascript" src="js/jquery.min.js"></script>
-    <script type="text/javascript" src="js/validacao.js"></script>
     <script type="text/javascript" src="js/jquery.js"></script>
     <script type="text/javascript" src="js/popper.min.js"></script>
     <script type="text/javascript" src="js/jquery-3.4.1.js"></script>
@@ -48,16 +50,17 @@
     <script src='packages/bootstrap/main.js'></script>
     <link href='https://use.fontawesome.com/releases/v5.0.6/css/all.css' rel='stylesheet'>
     <script src='packages/list/main.js'></script>
+    <script type="text/javascript" src="js/validacao.js"></script>
     
     <script>
     document.addEventListener('DOMContentLoaded', function() {
         var calendarEl = document.getElementById('calendar');
 
         var calendar = new FullCalendar.Calendar(calendarEl, {
-          themeSystem: "bootstrap",
           timezone: 'America/Fortaleza',
           locale:'pt-br',
           height: 600,
+          overflow: true,
           contentHeight: "auto",
           contentWidth: "auto",
           plugins: [ 'interaction','dayGrid', 'timeGrid', 'bootstrap', 'list'],
@@ -65,7 +68,6 @@
           navLinks: true,
           editable: true,
           eventLimit: true, // for all non-TimeGrid views
-          defaultView: 'listWeek',
           views: {
             timeGrid: {
               eventLimit: 2 // adjust to 6 only for timeGridWeek/timeGridDay
@@ -79,16 +81,16 @@
             center: 'title',
             right: 'timeGridWeek,timeGridDay,dayGridMonth,listWeek'
           },
-          eventSources: [
-            {
-              url: "api/get/calendar.php",
+          eventSources: [{
+            url: "api/get/calendar.php",
               extraParams: {
                 login: <?php echo $_SESSION['login'] ?>,
               },  
-              textColor: 'white' // an option!
+              textColor: 'white'
             }
           ],
           eventRender: function(info) {
+            console.log(info);
             if(info.view.type == 'dayGridMonth' || info.view.type == 'listWeek'){
               var user = document.createElement('div');
               user.innerHTML = info.event.extendedProps.description;
@@ -130,6 +132,7 @@
             });
           },  
           eventClick: function(info){
+            
             $.ajax({
               url:"api/get/dadoevento.php",
               type: 'GET',
@@ -142,6 +145,7 @@
               complete: function(data, response, status){
                 console.log(data);
                 let resposta = JSON.parse(data.responseText);
+                document.getElementById('idevento').value = resposta.id;
                 document.getElementById('nomevento').value = resposta.nome;
                 document.getElementById('datainicio').value = resposta.data_ag.substring(0,10);
                 document.getElementById('horarioinicio').value = resposta.data_ag.substring(11);

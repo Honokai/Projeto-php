@@ -1,13 +1,18 @@
 <?php 
-
-require_once("config/connection.php");
+require_once("config/BancoDados.php");
+$bd = new BancoDados();
+$conexao = $bd->conexao();
 
 $dado = $_GET['data'];
-$query = mysqli_query($conexao,"select * from usuario where `e-mail` like '".$dado."%'");
-$row = mysqli_num_rows($query);
 
-if($row != 0)
-    echo 1;
-else
-    echo 0;
+$query = "select * from usuario where `e-mail`='".$dado."'";
+$result = $conexao->prepare($query);
+$result->execute();
+$row = $result->fetch(PDO::FETCH_ASSOC);
+
+    if($row != 0)
+        echo 1;
+    else
+        echo 0;
+
 ?>
