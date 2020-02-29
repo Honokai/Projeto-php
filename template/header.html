@@ -26,9 +26,6 @@
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
     <link rel="stylesheet" type="text/css" href="style/main.css"/>
     <link rel="stylesheet" type="text/css" href="style/bootstrap.min.css"/>
-    <script type="text/javascript" src='js/moment.min.js'></script>
-    <script type="text/javascript" src='js/fullcalendar.min.js'></script>
-    
     
     <script type="text/javascript" src="mask/jquery.mask.js"></script>  
     <script type="text/javascript" src="js/teste.js"></script> 
@@ -95,6 +92,11 @@
               var user = document.createElement('div');
               user.innerHTML = info.event.extendedProps.description;
               info.el.lastChild.lastChild.appendChild(user);
+              console.log(info.el.style); 
+              if(info.event.extendedProps.description != ''){
+                info.el.style.backgroundColor  = "red";
+                info.el.style.borderColor = "red";
+              }
             }else{
               var user = document.createElement('div');
               user.style.display = 'inline-block';

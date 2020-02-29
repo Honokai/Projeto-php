@@ -101,7 +101,7 @@ $(document).ready(function(){
             error: function(data){
                 Swal.fire({
                     position: 'center',
-                    icon: 'success',
+                    icon: 'error',
                     title: data.responseText,
                     showConfirmButton: false,
                     timer: 1500
@@ -109,9 +109,77 @@ $(document).ready(function(){
             }
         })
       });
+
       $('#listadados a').on('click', function (e) {
-        e.preventDefault()
-        $(this).tab('show')
-      })
-    
+        e.preventDefault();
+        $(this).tab('show');
+      });
+
+      $('#acontecimentos').on("click", function(){
+        let feedback = $('#feedbackdescricao').val();
+        if(feedback == ""){
+            document.getElementById('atualizardescricao').style.display = "none";
+            document.getElementById('adicionardescricao').style.display = "inline-block";
+        }else{
+            document.getElementById('adicionardescricao').style.display = "none";
+            document.getElementById('atualizardescricao').style.display = "inline";
+        }
+      });
+
+      $('#adicionardescricao').on("click", function(){
+        $.ajax({
+            url: 'api/post/descricaoadd.php',
+            type: 'POST',
+            data: {
+                "tipo" : 1,
+                "id" : $('#idevento').val(),
+                "descricao" : $('#feedbackdescricao').val()
+            },
+            success: function(data, response){
+                Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: data.responseText,
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+                setTimeout(location.reload.bind(location), 1500);
+            },
+            error: function(data,response){
+                console.log(data);
+            }
+        });
+      });
+      $('#atualizardescricao').on("click", function(){
+        $.ajax({
+            url: 'api/post/descricaoadd.php',
+            type: 'POST',
+            data: {
+                "tipo" : 2,
+                "id" : $('#idevento').val(),
+                "descricao" : $('#feedbackdescricao').val()
+            },
+            success: function(data, response){
+                let resposta = JSON.parse(data);
+                Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: resposta.resposta,
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+                $("#modal").modal('toggle');
+            },
+            error: function(data,response){
+                let resposta = JSON.parse(data);
+                Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: resposta.resposta,
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+            }
+        });
+      });
 });
