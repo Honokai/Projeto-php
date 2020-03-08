@@ -20,6 +20,7 @@ $(document).ready(function(){
         });   
     });
     $('#enviar').on('click', function(){
+        let id = $('#idevento').val();
         let login = $('#login').val();
         let nome = $('#nomevento').val();
         let datainicio = $('#datainicio').val();
@@ -37,6 +38,7 @@ $(document).ready(function(){
             url: 'api/update/modalupdate.php',
             type: 'POST',
             data:{
+                "id":id,
                 "login":login,
                 "nome":nome,
                 "datainicio":datainicio,
@@ -51,7 +53,7 @@ $(document).ready(function(){
                 "horariotermino1":horatermino1,
                 "descricao1": descricao1
             },
-            complete: function(data,response){
+            success: function(data,response){
                 console.log(login);
                 console.log(response);
                 console.log(data);
@@ -64,7 +66,11 @@ $(document).ready(function(){
                 });
                 $("#modal").modal('toggle');
                 setTimeout(location.reload.bind(location), 1500);
+            },
+            error: function(data){
+                console.log(data);
             }
+
         });
       });
       $("#excluirevento").on("click", function(){

@@ -93,7 +93,7 @@
               user.innerHTML = info.event.extendedProps.description;
               info.el.lastChild.lastChild.appendChild(user);
               console.log(info.el.style); 
-              if(info.event.extendedProps.description != ''){
+              if(info.event.extendedProps.description != null && info.event.extendedProps.description != ""){
                 info.el.style.backgroundColor  = "red";
                 info.el.style.borderColor = "red";
               }
